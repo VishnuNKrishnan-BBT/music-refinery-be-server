@@ -11,7 +11,7 @@ const s3 = new AWS.S3(s3Config)
 // Function to delete all objects in a specific folder within a bucket
 export const deleteAllObjectsFromFolder = async (req, res) => {
 
-    const folderName = `sessions/${req.headers.Session}/`
+    const folderName = `sessions/${req.headers.session}/`
     console.log(`===========`);
     console.log(req.headers);
 
