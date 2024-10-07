@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk'
 import { TaskResponse } from '../constructors/taskResponse.mjs'
 import { s3Config } from '../config.mjs'
+import { deleteAllEntries, deleteEntry } from '../dbOps/deleteAllEntries.mjs'
 
 // Configure AWS SDK with your credentials and region
 const s3 = new AWS.S3(s3Config)
@@ -37,13 +38,10 @@ export const deleteAllObjectsFromFolder = async (req, res) => {
 
         // Delete the objects
         await s3.deleteObjects(deleteParams).promise()
-        console.log(`Successfully deleted ${listedObjects.Contents.length} objects.`)
 
-        // Check if there are more objects to delete
-        // if (listedObjects.IsTruncated) {
-        //     // If there are more objects, call the function again recursively
-        //     await deleteAllObjectsFromFolder(folderName)
-        // }
+        deleteAllEntries(req.headers.session)
+
+        console.log(`Successfully deleted ${listedObjects.Contents.length} objects.`)
         res.send(new TaskResponse(null, 'AWS: DELETE ALL FROM FOLDER').success(`Successfully deleted ${listedObjects.Contents.length} objects.`, null))
 
     } catch (error) {
