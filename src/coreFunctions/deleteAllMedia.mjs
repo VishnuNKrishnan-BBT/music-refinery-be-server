@@ -2,9 +2,6 @@ import AWS from 'aws-sdk'
 import { TaskResponse } from '../constructors/taskResponse.mjs'
 import { s3Config } from '../config.mjs'
 
-// Load environment variables
-// dotenv.config()
-
 // Configure AWS SDK with your credentials and region
 const s3 = new AWS.S3(s3Config)
 
@@ -12,10 +9,6 @@ const s3 = new AWS.S3(s3Config)
 export const deleteAllObjectsFromFolder = async (req, res) => {
 
     const folderName = `sessions/${req.headers.session}/`
-    console.log(`===========`);
-    console.log(req.headers);
-
-
 
     try {
         // List all objects in the specified folder
@@ -25,8 +18,8 @@ export const deleteAllObjectsFromFolder = async (req, res) => {
         }).promise()
 
         if (listedObjects.Contents.length === 0) {
-            console.log('No files to delete in the specified folder.')
-            res.send(new TaskResponse(null, 'AWS: DELETE ALL FROM FOLDER').failure('No files to delete in the specified folder.', null))
+            console.log(`No files to delete in folder ${folderName}.`)
+            res.send(new TaskResponse(null, 'AWS: DELETE ALL FROM FOLDER').failure('No files to delete in your session.', null))
         }
 
         // Create delete parameters
@@ -58,7 +51,3 @@ export const deleteAllObjectsFromFolder = async (req, res) => {
         res.send(new TaskResponse(null, 'AWS: DELETE ALL FROM FOLDER').failure('Error deleting objects:', error))
     }
 }
-
-// Call the function to delete all files from a specific folder in your bucket
-// const bucketName = process.env.AWS_BUCKET_NAME // Your bucket name
-// const folderName = 'SES_1029100/origFiles/' // Specify the folder path here
