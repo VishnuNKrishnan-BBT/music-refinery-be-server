@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'
 import { TaskResponse } from '../constructors/taskResponse.mjs'
 import { s3Config } from '../config.mjs'
-import { deleteAllEntries, deleteEntry } from '../dbOps/deleteAllEntries.mjs'
+import { deleteAllEntries } from '../dbOps/deleteAllEntries.mjs'
 
 // Configure AWS SDK with your credentials and region
 const s3 = new AWS.S3(s3Config)
