@@ -5,6 +5,7 @@ import cors from 'cors'
 import { uploadForProcessing } from './coreFunctions/uploadForProcessing.mjs'
 import { connectToMongoDB } from './dbOps/connectToMongoDB.mjs'
 import { deleteAllObjectsFromFolder } from './coreFunctions/deleteAllMedia.mjs'
+import { retrieveAllRecords } from './dbOps/retrieveAllRecords.mjs'
 
 // Load environment variables
 dotenv.config()
@@ -40,6 +41,11 @@ app.post('/uploadForProcessing', upload.array('files[]'), async (req, res) => {
 
 app.post('/deleteAll', async (req, res) => {
     deleteAllObjectsFromFolder(req, res)
+})
+
+app.post('/retrieveAll', async (req, res) => {
+    console.log(req.headers.session);
+    retrieveAllRecords(req, res)
 })
 
 // Start the server and listen on the specified port
