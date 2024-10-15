@@ -6,7 +6,7 @@ export const retrieveAllRecords = async (req, res) => {
     const session = req.headers.session
 
     try {
-        const retrievedList = await Media.find({ session: session })
+        const retrievedList = await Media.find({ session: session }).sort({ uid: 1 })
         // console.log('MongoDB Response:')
         // console.log(retrievedList)
         if (retrievedList.length > 0) {
