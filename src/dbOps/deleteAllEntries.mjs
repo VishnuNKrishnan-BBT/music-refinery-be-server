@@ -2,6 +2,7 @@ import { Media } from './schemas/media.mjs'
 import { TaskResponse } from '../constructors/taskResponse.mjs'
 
 export const deleteAllEntries = sessionId => {
+    console.log('Deleting all media entries for session ', sessionId)
     return new Promise(async (resolve, reject) => {
 
         try {
